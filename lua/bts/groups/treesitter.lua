@@ -1,0 +1,116 @@
+return function(p, cfg)
+  local styles = cfg.styles or {}
+  local keywords = styles.keywords or {}
+  local functions = styles.functions or {}
+  local variables = styles.variables or {}
+  local types = styles.types or {}
+  local strings = styles.strings or {}
+
+  local function merge(base, extra)
+    return vim.tbl_extend("force", base, extra)
+  end
+
+  local keyword = merge({ fg = p.purple_light }, keywords)
+  local function_hl = merge({ fg = p.blue }, functions)
+  local variable = merge({ fg = p.fg }, variables)
+  local type_hl = merge({ fg = p.cyan }, types)
+  local string_hl = merge({ fg = p.green }, strings)
+  local comment = merge({ fg = p.comment }, styles.comments or {})
+
+  return {
+    ["@variable"] = variable,
+    ["@variable.builtin"] = { fg = p.red },
+    ["@variable.parameter"] = { fg = p.lavender },
+    ["@variable.parameter.builtin"] = { fg = p.lavender },
+    ["@variable.member"] = { fg = p.violet },
+    ["@constant"] = { fg = p.yellow },
+    ["@constant.builtin"] = { fg = p.orange },
+    ["@constant.macro"] = { fg = p.magenta },
+    ["@module"] = { fg = p.yellow },
+    ["@module.builtin"] = { fg = p.orange },
+    ["@label"] = { fg = p.purple_light },
+    ["@string"] = string_hl,
+    ["@string.documentation"] = comment,
+    ["@string.regexp"] = { fg = p.orange },
+    ["@string.escape"] = { fg = p.pink },
+    ["@string.special"] = { fg = p.cyan },
+    ["@string.special.symbol"] = { fg = p.violet },
+    ["@string.special.url"] = { fg = p.blue, underline = true },
+    ["@string.special.path"] = { fg = p.blue },
+    ["@character"] = string_hl,
+    ["@character.special"] = { fg = p.pink },
+    ["@number"] = { fg = p.orange },
+    ["@number.float"] = { fg = p.orange },
+    ["@boolean"] = { fg = p.orange },
+    ["@type"] = type_hl,
+    ["@type.builtin"] = { fg = p.cyan, italic = true },
+    ["@type.definition"] = type_hl,
+    ["@attribute"] = { fg = p.yellow },
+    ["@attribute.builtin"] = { fg = p.orange },
+    ["@property"] = { fg = p.violet },
+    ["@function"] = function_hl,
+    ["@function.builtin"] = { fg = p.cyan },
+    ["@function.call"] = function_hl,
+    ["@function.macro"] = { fg = p.magenta },
+    ["@function.method"] = function_hl,
+    ["@function.method.call"] = function_hl,
+    ["@constructor"] = { fg = p.yellow },
+    ["@operator"] = { fg = p.purple_light },
+    ["@keyword"] = keyword,
+    ["@keyword.coroutine"] = keyword,
+    ["@keyword.function"] = keyword,
+    ["@keyword.operator"] = keyword,
+    ["@keyword.import"] = keyword,
+    ["@keyword.type"] = keyword,
+    ["@keyword.modifier"] = keyword,
+    ["@keyword.repeat"] = keyword,
+    ["@keyword.return"] = keyword,
+    ["@keyword.debug"] = { fg = p.orange },
+    ["@keyword.exception"] = keyword,
+    ["@keyword.conditional"] = keyword,
+    ["@keyword.conditional.ternary"] = { fg = p.purple_light },
+    ["@keyword.directive"] = { fg = p.magenta },
+    ["@keyword.directive.define"] = { fg = p.magenta },
+    ["@punctuation.delimiter"] = { fg = p.fg_dim },
+    ["@punctuation.bracket"] = { fg = p.fg_dim },
+    ["@punctuation.special"] = { fg = p.pink },
+    ["@comment"] = comment,
+    ["@comment.documentation"] = comment,
+    ["@comment.error"] = { fg = p.on_accent, bg = p.error, bold = true },
+    ["@comment.warning"] = { fg = p.on_accent, bg = p.warn, bold = true },
+    ["@comment.todo"] = { fg = p.on_accent, bg = p.info, bold = true },
+    ["@comment.note"] = { fg = p.on_accent, bg = p.hint, bold = true },
+    ["@markup.strong"] = { bold = true },
+    ["@markup.italic"] = { italic = true },
+    ["@markup.strikethrough"] = { strikethrough = true },
+    ["@markup.underline"] = { underline = true },
+    ["@markup.heading"] = { fg = p.purple_light, bold = true },
+    ["@markup.heading.1"] = { fg = p.pink, bold = true },
+    ["@markup.heading.2"] = { fg = p.purple_light, bold = true },
+    ["@markup.heading.3"] = { fg = p.blue, bold = true },
+    ["@markup.heading.4"] = { fg = p.cyan, bold = true },
+    ["@markup.heading.5"] = { fg = p.green, bold = true },
+    ["@markup.heading.6"] = { fg = p.yellow, bold = true },
+    ["@markup.quote"] = { fg = p.fg_muted, italic = true },
+    ["@markup.math"] = { fg = p.cyan },
+    ["@markup.link"] = { fg = p.blue, underline = true },
+    ["@markup.link.label"] = { fg = p.purple_light },
+    ["@markup.link.url"] = { fg = p.blue, underline = true },
+    ["@markup.raw"] = { fg = p.green },
+    ["@markup.raw.block"] = { fg = p.green },
+    ["@markup.list"] = { fg = p.purple_light },
+    ["@markup.list.checked"] = { fg = p.green },
+    ["@markup.list.unchecked"] = { fg = p.fg_muted },
+    ["@diff.plus"] = { fg = p.git_add },
+    ["@diff.minus"] = { fg = p.git_delete },
+    ["@diff.delta"] = { fg = p.git_change },
+    ["@tag"] = { fg = p.pink },
+    ["@tag.builtin"] = { fg = p.pink },
+    ["@tag.attribute"] = { fg = p.yellow },
+    ["@tag.delimiter"] = { fg = p.fg_dim },
+    ["@none"] = {},
+    ["@conceal"] = { fg = p.fg_muted },
+    ["@spell"] = {},
+    ["@nospell"] = {},
+  }
+end
